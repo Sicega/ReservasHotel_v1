@@ -34,6 +34,7 @@ public enum TipoHabitacion {
 
     @Override
     public String toString() {
+
         return cadenaAMostrar;
     }
 

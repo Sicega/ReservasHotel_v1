@@ -35,7 +35,7 @@ public enum TipoHabitacion {
     @Override
     public String toString() {
 
-        return cadenaAMostrar;
+        return "La habitación de tipo " + cadenaAMostrar + " tiene una capacidad de " + numeroMaximoPersonas + " personas.";
     }
 
     /**6- Tras pasar los tests correctamente hago commit and push*/

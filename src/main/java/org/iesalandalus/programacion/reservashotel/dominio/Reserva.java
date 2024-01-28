@@ -8,8 +8,8 @@ import java.util.Objects;
 
 public class Reserva {
 
-    public static final int MAX_NUMERO_MESES_RESERVA=6;
-    private static final int MAX_HORAS_POSTERIOR_CHECKOUT=12;
+    public static final int MAX_NUMERO_MESES_RESERVA=6; //Establezco 6 meses ya que así lo indican los tests
+    private static final int MAX_HORAS_POSTERIOR_CHECKOUT=12; //Hasta 12:00 pm es el máximo en el que un huesped puede quedarse tras el checkout
     public static final String FORMATO_FECHA_RESERVA="dd/MM/yyyy";
     public static final String FORMATO_FECHA_HORA_RESERVA="dd/MM/yyyy hh:mm:ss";
 
@@ -20,12 +20,10 @@ public class Reserva {
     private LocalDate fechaFinReserva;
     private LocalDateTime checkIn;
     private LocalDateTime checkOut;
-
-    /*2.8-El atributo precio debe calcularse teniendo en cuenta el coste de la habitación, el régimen de alojamiento y el número de personas alojadas. */
     private double precio;
     private int numeroPersonas;
 
-    // MÉTODO CONSTRUCTOR
+    // 3-Crea el constructor con parámetros que harán uso de los métodos de modificación.
 
     public Reserva(Huesped huesped, Habitacion habitacion, Regimen regimen, LocalDate fechaInicioReserva, LocalDate fechaFinReserva, int numeroPersonas){
 
@@ -39,7 +37,7 @@ public class Reserva {
 
     }
 
-    //CONSTRUCTOR COPIA
+    //4-Crea el constructor copia.
 
     public Reserva(Reserva reserva){
 
@@ -54,7 +52,10 @@ public class Reserva {
         setFechaInicioReserva(reserva.getFechaInicioReserva());
         setFechaFinReserva(reserva.getFechaFinReserva());
 
+        //Compruebo que el check in y el check out no son nulos antes de asignarlos
+
         if (reserva.getCheckIn() != null) {
+
             setCheckIn(reserva.getCheckIn());
         }
 
@@ -120,10 +121,15 @@ public class Reserva {
         return precio;
     }
 
+    /*2.8-El atributo precio debe calcularse teniendo en cuenta el coste de la habitación, el régimen de alojamiento y el número de personas alojadas. */
+
     private void setPrecio() {
+
+        //Con una variable auxiliar (diasReserva) almaceno la diferencia de dias entre la fecha de inicio y de fin de reserva usando el método until
 
         long diasReserva=fechaInicioReserva.until(fechaFinReserva, ChronoUnit.DAYS);
 
+        //Para calcular el precio total de la reserva, tengo en cuenta el tipo de habitación multiplicado por el nº de días y sumo el tipo de regimen, multiplicado por el nº de personas alojadas en la habitación y de nuevo por el nº de días de la reserva
 
         precio = (habitacion.getPrecio()*diasReserva)+(regimen.getIncrementoPrecio()*numeroPersonas*diasReserva);
     }
@@ -169,6 +175,8 @@ public class Reserva {
             throw new NullPointerException("ERROR: La fecha de fin de una reserva no puede ser nula.");
         }
 
+        //Añado la comprobación de que la fecha de fin de reserva no es igual a la de inicio de reserva porque lo requiere un test
+
         if(fechaFinReserva.isBefore(fechaInicioReserva) || fechaFinReserva.isEqual(fechaInicioReserva)){
 
             throw new IllegalArgumentException("ERROR: La fecha de fin de la reserva debe ser posterior a la de inicio.");
@@ -187,6 +195,8 @@ public class Reserva {
      no puede superar al número máximo de personas que, por el tipo de habitación reservada, se permiten alojar.*/
 
     public void setNumeroPersonas(int numeroPersonas){
+
+        //Para que haya una reserva como mínimo debería haber 1 persona, por lo que puse numeroPersonas<1, pero el test requería que fuese <=0
 
         if(numeroPersonas<=0){
 
@@ -215,6 +225,8 @@ public class Reserva {
            throw new NullPointerException("ERROR: El checkin de una reserva no puede ser nulo.");
 
        }
+
+       //Con el método atStartofDay() establezco el inicio del día en las 00:00 am
 
 
         if(checkIn.isBefore(fechaInicioReserva.atStartOfDay())){
@@ -266,6 +278,8 @@ public class Reserva {
         return checkOut;
     }
 
+    //5-Una reserva será igual a otra si se realiza sobre la misma habitación y en la misma fecha de inicio, basandome en ello creo el método equals y hashcode
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -279,12 +293,19 @@ public class Reserva {
         return Objects.hash(habitacion, fechaInicioReserva);
     }
 
+    //6-Creo el método toString que devuelva la cadena que esperan los tests.
+
     @Override
     public String toString() {
+
         DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern(FORMATO_FECHA_RESERVA);
+
         DateTimeFormatter formatoFechaHora = DateTimeFormatter.ofPattern(FORMATO_FECHA_HORA_RESERVA);
 
+        //Verifica si la fecha de check in o check out es nula, si no es nula obtiene el formato de fecha y hora, si es nula, por defecto saldrá el mensaje "No registrado"
+
         String checkInString = getCheckIn() != null ? getCheckIn().format(formatoFechaHora) : "No registrado";
+
         String checkOutString = getCheckOut() != null ? getCheckOut().format(formatoFechaHora) : "No registrado";
 
         return String.format("Huesped: %s %s Habitación:%s - %s Fecha Inicio Reserva: %s Fecha Fin Reserva: %s Checkin: %s Checkout: %s Precio: %.2f Personas: %d",
@@ -292,4 +313,6 @@ public class Reserva {
                 getHabitacion().getTipoHabitacion(), getFechaInicioReserva().format(formatoFecha),
                 getFechaFinReserva().format(formatoFecha), checkInString, checkOutString, getPrecio(), getNumeroPersonas());
     }
+
+    //7-Compruebo que la clase pasa los test para la misma y realizo un commit.
 }

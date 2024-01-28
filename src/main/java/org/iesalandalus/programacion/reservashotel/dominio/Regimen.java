@@ -6,9 +6,7 @@ public enum Regimen {
 
     SOLO_ALOJAMIENTO("Solo Alojamiento",0),
     ALOJAMIENTO_DESAYUNO("Alojamiento y Desayuno", 15),
-
     MEDIA_PENSION("Media Pensión", 30),
-
     PENSION_COMPLETA("Pensión Completa", 50);
 
     //2-Creo los atributos, ambos de visibilidad privada

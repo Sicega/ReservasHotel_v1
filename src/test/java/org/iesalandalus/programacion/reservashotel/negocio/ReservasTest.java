@@ -7,11 +7,18 @@ import org.junit.jupiter.api.Test;
 import javax.naming.OperationNotSupportedException;
 import java.time.LocalDate;
 
+import org.iesalandalus.programacion.reservashotel.dominio.Reserva;
+import org.iesalandalus.programacion.reservashotel.dominio.Huesped;
+import org.iesalandalus.programacion.reservashotel.dominio.Habitacion;
+import org.iesalandalus.programacion.reservashotel.dominio.TipoHabitacion;
+import org.iesalandalus.programacion.reservashotel.dominio.Regimen;
+import org.iesalandalus.programacion.reservashotel.MainApp;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.fail;
 
 public class ReservasTest {
-/*
+
     private static Huesped huesped1;
     private static Huesped huesped2;
     private static Huesped huesped3;
@@ -543,5 +550,4 @@ public class ReservasTest {
         }
     }
 
- */
 }

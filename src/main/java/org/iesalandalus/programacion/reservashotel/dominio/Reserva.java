@@ -302,7 +302,7 @@ public class Reserva {
 
         DateTimeFormatter formatoFechaHora = DateTimeFormatter.ofPattern(FORMATO_FECHA_HORA_RESERVA);
 
-        //Verifica si la fecha de check in o check out es nula, si no es nula obtiene el formato de fecha y hora, si es nula, por defecto saldrá el mensaje "No registrado"
+        //Verifico con las variables auxiliares checkInString y checkOutString si la fecha de check in o check out es nula, si no es nula obtiene el formato de fecha y hora, si es nula, por defecto saldrá el mensaje "No registrado"
 
         String checkInString = getCheckIn() != null ? getCheckIn().format(formatoFechaHora) : "No registrado";
 

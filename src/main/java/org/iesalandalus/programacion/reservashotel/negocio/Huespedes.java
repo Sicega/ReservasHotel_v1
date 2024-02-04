@@ -77,15 +77,15 @@ public class Huespedes {
 
         // Compruebo si el huésped ya existe en la colección
 
-        if (buscar(huesped) != null) {
+        if (buscar(huesped) == null) {
 
             throw new IllegalArgumentException("ERROR: Ya existe un huésped con ese dni.");
         }
 
-        if(capacidad<0){
+        /*if(capacidad<0){
 
             throw new IllegalArgumentException("ERROR: La capacidad debe ser mayor que cero.");
-        }
+        }*/
 
         if (tamano >= capacidad) {
 
@@ -102,6 +102,12 @@ public class Huespedes {
 
     private int buscarIndice(Huesped huesped)  {
 
+        if(huesped==null){
+
+            throw new NullPointerException("huesped null buscarindice");
+
+        }
+
         for (int i = 0; i < tamano; i++) {
 
             if (coleccionHuespedes[i].equals(huesped)) {
@@ -115,7 +121,7 @@ public class Huespedes {
 
     private boolean tamanoSuperado(int indice) {
 
-        return indice >= tamano;
+        return indice > tamano;
     }
 
     private boolean capacidadSuperada(int indice) {
@@ -128,9 +134,14 @@ public class Huespedes {
 
     public Huesped buscar(Huesped huesped) {
 
+        if(huesped==null){
+
+            throw new NullPointerException("huesped buscar null");
+        }
+
         int indice = buscarIndice(huesped);
 
-        return (indice != -1) ? coleccionHuespedes[indice] : null;
+        return coleccionHuespedes[indice];
     }
 
     /*1.5-El método borrar, si el huésped se encuentra en la colección, lo borrará y desplazará
@@ -150,16 +161,21 @@ public class Huespedes {
             throw new  OperationNotSupportedException ("ERROR: No existe ningún huésped como el indicado.");
         }
 
-        if (indice != -1) {
+        coleccionHuespedes[indice]=null;
 
-            desplazarUnaPosicionHaciaIzquierda(indice);
+        desplazarUnaPosicionHaciaIzquierda(indice);
 
-            tamano--;
+        tamano--;
 
-        }
+
     }
 
     private void desplazarUnaPosicionHaciaIzquierda(int indice) {
+
+        if(indice<0 || capacidadSuperada(indice)){
+
+            throw new IllegalArgumentException("desplazar izquierda out of bounds");
+        }
 
         for (int i = indice; i < tamano - 1; i++) {
 

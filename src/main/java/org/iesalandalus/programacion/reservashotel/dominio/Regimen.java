@@ -38,7 +38,9 @@ public enum Regimen {
     @Override
     public String toString() {
 
-        return "La opción de " + cadenaAMostrar + " conlleva un incremento de precio de " + incrementoPrecio;
+        //return "La opción de " + cadenaAMostrar + " conlleva un incremento de precio de " + incrementoPrecio;
+
+        return ordinal() + " .- " + cadenaAMostrar;
     }
 
     //6-Tras pasar los tests hago commit and push

@@ -55,6 +55,7 @@ public class Habitaciones {
 
         int indice = 0;
 
+
         for (int i = 0; i < tamano; i++) {
 
             if (coleccionHabitaciones[i].getTipoHabitacion() == tipoHabitacion) {
@@ -87,15 +88,11 @@ public class Habitaciones {
 
         // Compruebo si la habitación ya existe en la colección
 
-        if (buscar(habitacion) != null) {
+        if (buscar(habitacion) == null) {
 
             throw new IllegalArgumentException("ERROR: Ya existe esa habitación..");
         }
 
-        if(capacidad<0){
-
-            throw new IllegalArgumentException("ERROR: La capacidad debe ser mayor que cero.");
-        }
 
         if (tamano >= capacidad) {
 
@@ -111,15 +108,22 @@ public class Habitaciones {
 
     private int buscarIndice(Habitacion habitacion)  {
 
+        if (habitacion==null){
+
+            throw new NullPointerException("Error");
+        }
+
+        int indice = -1;
+
         for (int i = 0; i < tamano; i++) {
 
             if (coleccionHabitaciones[i].equals(habitacion)) {
 
-                return i;
+                indice=i;
             }
         }
 
-        return -1;
+        return indice;
     }
 
     private boolean tamanoSuperado(int indice) {

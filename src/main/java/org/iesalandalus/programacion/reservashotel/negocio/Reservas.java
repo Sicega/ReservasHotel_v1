@@ -59,7 +59,7 @@ public class Reservas {
 
     public void insertar (Reserva reserva) throws OperationNotSupportedException {
         if (reserva == null) {
-            throw new IllegalArgumentException("ERROR: No se puede insertar una reserva nula.");
+            throw new NullPointerException("ERROR: No se puede insertar una reserva nula.");
         }
 
         // Compruebo si la reserva ya existe en la colección
@@ -78,7 +78,7 @@ public class Reservas {
 
         // Agrego la reserva al final de la colección
 
-        coleccionReservas[tamano] = new Reserva(reserva);
+        coleccionReservas[getTamano()] = new Reserva(reserva);
 
         tamano++;
     }
@@ -108,6 +108,10 @@ public class Reservas {
     }
 
     public Reserva buscar(Reserva reserva)  {
+        if (reserva==null){
+
+            throw new NullPointerException("errorcillo");
+        }
 
         int indice = buscarIndice(reserva);
 
@@ -135,6 +139,14 @@ public class Reservas {
 
     // Método para desplazar una posición hacia la izquierda
     private void desplazarUnaPosicionHaciaIzquierda(int indice) {
+
+        //todo hacer if
+
+        if(indice<0 || capacidadSuperada(indice)){
+
+            throw new NullPointerException("desplazarunaPosicion no puede ser menor que cero");
+        }
+
         for (int i = indice; i < tamano - 1; i++) {
             coleccionReservas[i] = coleccionReservas[i + 1];
         }
@@ -145,16 +157,52 @@ public class Reservas {
     // Método para obtener reservas por huésped o tipo de habitación
     public Reserva[] getReservas(Huesped huesped) {
 
-        return Arrays.stream(coleccionReservas)
-                .filter(reserva -> reserva.getHuesped().equals(huesped))
-                .toArray(Reserva[]::new);
+        if(huesped==null){
+
+            throw new NullPointerException("ERROR: No se pueden buscar reservas de un huesped nulo.");
+        }
+
+        int posicion=0;
+
+        Reserva[] miReserva= new Reserva[capacidad];
+
+        for(Reserva elemento : coleccionReservas){
+
+            if(elemento.getHuesped().equals(huesped)) {
+
+                miReserva[posicion]= new Reserva(elemento);
+
+                posicion++;
+            }
+
+        }
+
+        return miReserva;
     }
 
     public Reserva[] getReservas(TipoHabitacion tipoHabitacion) {
 
-        return Arrays.stream(coleccionReservas)
-                .filter(reserva -> reserva.getHabitacion().getTipoHabitacion() == tipoHabitacion)
-                .toArray(Reserva[]::new);
+        if(tipoHabitacion==null){
+
+            throw new NullPointerException("ERROR: No se pueden buscar reservas de un tipo de habitación nula.");
+        }
+
+        int posicion=0;
+
+        Reserva[] miReserva= new Reserva[capacidad];
+
+        for(Reserva elemento : coleccionReservas){
+
+            if(elemento.getHabitacion().getTipoHabitacion().equals(tipoHabitacion)) {
+
+                miReserva[posicion]= new Reserva(elemento);
+
+                posicion++;
+            }
+
+        }
+
+        return miReserva;
     }
 
     // Método para obtener reservas futuras para una habitación

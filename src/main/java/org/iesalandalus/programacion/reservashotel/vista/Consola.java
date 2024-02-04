@@ -7,6 +7,8 @@ import org.iesalandalus.programacion.reservashotel.dominio.TipoHabitacion;
 import org.iesalandalus.programacion.reservashotel.dominio.Regimen;
 import org.iesalandalus.programacion.reservashotel.dominio.Reserva;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.InputMismatchException;
 
 public class Consola {
@@ -25,18 +27,31 @@ public class Consola {
 
     public static Opcion elegirOpcion() {
 
-        System.out.print("Elige una opción: ");
+        int opcionElegida;
 
-        int opcionElegida = Entrada.entero();
+        do{
+            System.out.print("Elige una opción: ");
+
+            opcionElegida = Entrada.entero();
+
+        }while(opcionElegida<0 || opcionElegida > Opcion.values().length);
 
         return Opcion.values()[opcionElegida];
+
     }
 
     public static Huesped leerHuesped() {
 
-        System.out.print("Introduce el nombre del huésped: ");
+        String nombre;
 
-        String nombre = Entrada.cadena();
+        do{
+            System.out.print("Introduce el nombre del huésped: ");
+
+            nombre = Entrada.cadena();
+
+        }while(nombre == null || nombre.isBlank());
+
+        //todo hacer el do while con todo
 
         System.out.print("Introduce el DNI del huésped: ");
 
@@ -50,9 +65,10 @@ public class Consola {
 
         String telefono = Entrada.cadena();
 
-        System.out.print("Introduce la fecha de nacimiento del huésped: ");
+        System.out.print("Introduce la fecha de nacimiento del huésped ddMMyyyy: ");
 
-        LocalDate fechaNacimiento = LocalDate.parse(Entrada.cadena());
+
+        LocalDate fechaNacimiento = Consola.leerFecha();
 
         return new Huesped(nombre, dni, correo, telefono, fechaNacimiento);
     }
@@ -63,33 +79,38 @@ public class Consola {
 
         String dni = Entrada.cadena();
 
-        return new Huesped(leerHuesped().getDni());
+        return new Huesped("nombre", dni, "correo@gmail.com", "623456789", LocalDate.of(2000,4,4));
     }
 
     public static LocalDate leerFecha() {
 
-        LocalDate fecha = null;
+        String fecha = null;
 
         boolean fechaValida = false;
 
         while (!fechaValida) {
 
-            System.out.print("Introduce la fecha (formato dd-mm-yyyy): ");
-            try {
+            System.out.print("Introduce la fecha (formato dd/mm/yyyy): ");
 
-                fecha = LocalDate.parse(Entrada.cadena());
+            fecha = Entrada.cadena();
 
+
+
+            if (fecha.matches("[0-3][0-9]/[0-1][0-9]/[1-2][0-9]{3}"))
                 fechaValida = true;
 
-            } catch (Exception e) {
-
-                System.out.println("Error: Formato de fecha incorrecto.");
-            }
         }
-        return fecha;
+
+        DateTimeFormatter formato= DateTimeFormatter.ofPattern(Huesped.FORMATO_FECHA);
+
+        LocalDate fechaFormato=LocalDate.parse(fecha, formato);
+
+        return fechaFormato;
     }
 
     public static Habitacion leerHabitacion() {
+
+        //todo pon los do while, poner las constantes de los valores min y max
 
         System.out.print("Introduce el número de planta de la habitación: ");
 
@@ -114,17 +135,19 @@ public class Consola {
 
         System.out.print("Introduce el identificador de la habitación: ");
 
-        String identificador = Entrada.cadena();
+        int planta = Entrada.entero();
+        int puerta = Entrada.entero();
+
 
         try {
 
-            return new Habitacion (leerHabitacion().getIdentificador());
+            return new Habitacion(planta,puerta,50);
 
         } catch (IllegalArgumentException e) {
 
             System.out.println(e.getMessage());
 
-            return null; // o puedes lanzar una excepción específica aquí si lo prefieres
+            return null;
         }
     }
 
@@ -140,7 +163,13 @@ public class Consola {
 
         System.out.print("Elige un tipo de habitación: ");
 
-        int tipoElegido = Entrada.entero();
+        int tipoElegido;
+
+        do {
+
+            tipoElegido = Entrada.entero();
+
+        }while(tipoElegido <0 || tipoElegido >= TipoHabitacion.values().length);
 
         return TipoHabitacion.values()[tipoElegido];
     }
@@ -156,36 +185,25 @@ public class Consola {
 
         System.out.print("Elige un tipo de régimen: ");
 
+        //todo hacer el do while
         int regimenElegido = Entrada.entero();
 
         return Regimen.values()[regimenElegido];
     }
 
     public static int leerNumeroPersonas() {
-        System.out.print("Introduce el número de personas: ");
 
-        while (true) {
-            try {
-                int numeroPersonas = Entrada.entero();
+        int numeroPersonas;
 
-                if (numeroPersonas <= 0) {
 
-                    throw new IllegalArgumentException("El número de personas debe ser mayor que cero.");
-                }
+        do {
+            System.out.print("Introduce el número de personas: ");
 
-                return numeroPersonas;
+            numeroPersonas = Entrada.entero();
 
-            } catch (InputMismatchException e) {
+        }while(numeroPersonas<=0);
 
-                System.out.println("Error: Debes introducir un número entero.");
-
-                Entrada.cadena();
-
-            } catch (IllegalArgumentException e) {
-
-                System.out.println(e.getMessage());
-            }
-        }
+        return numeroPersonas;
     }
 
 

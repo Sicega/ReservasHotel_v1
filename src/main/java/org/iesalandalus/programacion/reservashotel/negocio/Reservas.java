@@ -5,6 +5,7 @@ import org.iesalandalus.programacion.reservashotel.dominio.Huesped;
 import org.iesalandalus.programacion.reservashotel.dominio.Habitacion;
 import org.iesalandalus.programacion.reservashotel.dominio.TipoHabitacion;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import javax.naming.OperationNotSupportedException;
 
@@ -231,6 +232,48 @@ public class Reservas {
         }
 
         return Arrays.copyOf(reservasFuturas, contador);
+    }
+
+    //El método realizar checkIn debe buscar el índice de la reserva y si verifica que la reserva está en la colección aplica el setCheckIn con parámetro fecha
+
+    public void realizarCheckin(Reserva reserva, LocalDateTime fecha) throws OperationNotSupportedException {
+
+        //Compruebo si la reserva o la fecha son nulas
+
+        if (reserva == null || fecha == null) {
+            throw new NullPointerException("ERROR: La reserva y la fecha no pueden ser nulas.");
+        }
+
+        //busco el indice de la reserva para ver si existe
+
+        int indice = buscarIndice(reserva);
+
+        //Si devuelve -1 es porque la reserva no existe y lanza una excepción
+
+        if (indice == -1) {
+            throw new IllegalArgumentException("ERROR: No existe ninguna reserva como la indicada.");
+        }
+
+        //Si la reserva existe se le aplica a la colección el método setCheckIn
+
+        coleccionReservas[indice].setCheckIn(fecha);
+    }
+
+    //El mismo procedimiento de realizarCheckIn se aplica al checkOut
+
+    public void realizarCheckout(Reserva reserva, LocalDateTime fecha) throws OperationNotSupportedException {
+
+        if (reserva == null || fecha == null) {
+            throw new NullPointerException("ERROR: La reserva y la fecha no pueden ser nulas.");
+        }
+
+        int indice = buscarIndice(reserva);
+
+        if (indice == -1) {
+            throw new IllegalArgumentException("ERROR: No existe ninguna reserva como la indicada.");
+        }
+
+        coleccionReservas[indice].setCheckOut(fecha);
     }
 
 }

@@ -221,4 +221,31 @@ public class Consola {
         return new Reserva(huesped, habitacion, regimen, fechaInicioReserva, fechaFinReserva, numeroPersonas);
     }
 
+    public static LocalDateTime leerFechaHora(String mensaje) {
+
+        // Variable para almacenar la entrada del usuario (fecha y hora)
+
+        String fechaHora = null;
+
+        // Bucle do-while para asegurar que se solicita la entrada al menos una vez y se repite si la entrada no es válida
+
+        do {
+            System.out.print(mensaje);
+
+            fechaHora = Entrada.cadena();
+
+            // Para verificar si la entrada coincide con el formato esperado
+
+            if (!fechaHora.matches(Reserva.FORMATO_FECHA_HORA_RESERVA)) {
+                System.out.println("ERROR: Formato de fecha y hora incorrecto.");
+            }
+        } while (!fechaHora.matches(Reserva.FORMATO_FECHA_HORA_RESERVA));
+
+        // Cre0 un formateador de fecha y hora con el formato de la constante
+
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern(Reserva.FORMATO_FECHA_HORA_RESERVA);
+
+        return LocalDateTime.parse(fechaHora, formato); // Convierto la cadena de fecha y hora a un objeto LocalDateTime utilizando el formateador
+    }
+
 }

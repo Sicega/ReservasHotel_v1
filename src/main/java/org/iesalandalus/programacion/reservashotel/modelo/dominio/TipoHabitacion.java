@@ -1,4 +1,4 @@
-package org.iesalandalus.programacion.reservashotel.dominio;
+package org.iesalandalus.programacion.reservashotel.modelo.dominio;
 
 /**1-Creo la clase tipo enum en el paquete dominio y le establezco valores a los argumentos del enumerado*/
 

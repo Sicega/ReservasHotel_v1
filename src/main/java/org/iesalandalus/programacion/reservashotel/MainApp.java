@@ -1,14 +1,13 @@
 package org.iesalandalus.programacion.reservashotel;
 
 
-import org.iesalandalus.programacion.reservashotel.dominio.Habitacion;
-import org.iesalandalus.programacion.reservashotel.dominio.Huesped;
-import org.iesalandalus.programacion.reservashotel.dominio.Regimen;
-import org.iesalandalus.programacion.reservashotel.dominio.Reserva;
-import org.iesalandalus.programacion.reservashotel.dominio.TipoHabitacion;
-import org.iesalandalus.programacion.reservashotel.negocio.Huespedes;
-import org.iesalandalus.programacion.reservashotel.negocio.Habitaciones;
-import org.iesalandalus.programacion.reservashotel.negocio.Reservas;
+import org.iesalandalus.programacion.reservashotel.modelo.dominio.Habitacion;
+import org.iesalandalus.programacion.reservashotel.modelo.dominio.Huesped;
+import org.iesalandalus.programacion.reservashotel.modelo.dominio.Reserva;
+import org.iesalandalus.programacion.reservashotel.modelo.dominio.TipoHabitacion;
+import org.iesalandalus.programacion.reservashotel.modelo.negocio.Huespedes;
+import org.iesalandalus.programacion.reservashotel.modelo.negocio.Habitaciones;
+import org.iesalandalus.programacion.reservashotel.modelo.negocio.Reservas;
 import org.iesalandalus.programacion.reservashotel.vista.Opcion;
 import org.iesalandalus.programacion.reservashotel.vista.Consola;
 import org.iesalandalus.programacion.utilidades.Entrada;
@@ -17,7 +16,6 @@ import javax.naming.OperationNotSupportedException;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.List;
 
 public class MainApp {
 

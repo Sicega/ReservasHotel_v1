@@ -6,12 +6,13 @@ import org.iesalandalus.programacion.reservashotel.modelo.negocio.*;
 import org.iesalandalus.programacion.utilidades.Entrada;
 import javax.naming.OperationNotSupportedException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Comparator;
 
 public class Vista {
 
-    public static final int CAPACIDAD = 10;
     private static Reservas reservas;
     private static Huespedes huespedes;
     private static Habitaciones habitaciones;
@@ -509,9 +510,9 @@ public class Vista {
 
         Huesped huesped = Consola.leerHuespedPorDni();
 
-        System.out.println("Introduce la fecha (dd/MM/yyyy) del checkin:");
+        System.out.println("Introduce la fecha (dd/MM/yyyy) y la hora (hh:mm:ss) del checkin:");
 
-        LocalDate fechaCheckin = LocalDate.parse(Entrada.cadena());
+        LocalDateTime fechaCheckin = Consola.leerFechaHora(Entrada.cadena());
 
         Reserva[] reservasHuesped = reservas.getReservas(huesped);
 
@@ -539,11 +540,11 @@ public class Vista {
         } while (indiceReserva < 0 || indiceReserva >= reservasHuesped.length);
 
         try {
-            controlador.realizarCheckIn(reservasHuesped[indiceReserva], fechaCheckin.atStartOfDay());
+            controlador.realizarCheckIn(reservasHuesped[indiceReserva], fechaCheckin);
 
             System.out.println("Checkin realizado correctamente.");
 
-        } catch (OperationNotSupportedException e) {
+        } catch (IllegalArgumentException | NullPointerException e) {
 
             System.out.println(e.getMessage());
         }
@@ -555,9 +556,9 @@ public class Vista {
 
         Huesped huesped = Consola.leerHuespedPorDni();
 
-        System.out.println("Introduce la fecha (dd/MM/yyyy) del checkout:");
+        System.out.println("Introduce la fecha (dd/MM/yyyy) y la hora (hh:mm:ss) del checkout:");
 
-        LocalDate fechaCheckout = LocalDate.parse(Entrada.cadena());
+        LocalDateTime fechaCheckout = Consola.leerFechaHora(Entrada.cadena());
 
         Reserva[] reservasHuesped = reservas.getReservas(huesped);
 
@@ -587,11 +588,11 @@ public class Vista {
 
         try { // Realiza el checkout utilizando el controlador
 
-            controlador.realizarCheckOut(reservasHuesped[indiceReserva], fechaCheckout.atStartOfDay());
+            controlador.realizarCheckOut(reservasHuesped[indiceReserva], fechaCheckout);
 
             System.out.println("Checkout realizado correctamente.");
 
-        } catch (OperationNotSupportedException e) {
+        } catch (IllegalArgumentException | NullPointerException e) {
 
             System.out.println(e.getMessage());
         }

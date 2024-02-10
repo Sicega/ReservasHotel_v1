@@ -83,16 +83,19 @@ public class Habitaciones {
 
         if (habitacion == null) {
 
-            throw new IllegalArgumentException("ERROR: No es posible copiar una habitación nula.");
+            throw new NullPointerException("ERROR: No se puede insertar una habitación nula.");
         }
 
         // Compruebo si la habitación ya existe en la colección
 
-        if (buscar(habitacion) == null) {
+        if (buscar(habitacion) != null) {
 
-            throw new IllegalArgumentException("ERROR: Ya existe esa habitación..");
+            throw new OperationNotSupportedException("ERROR: Ya existe una habitación con ese identificador.");
         }
 
+        if (capacidad < 0) {
+            throw new IllegalArgumentException("ERROR: La capacidad debe ser mayor que cero.");
+        }
 
         if (tamano >= capacidad) {
 
@@ -101,29 +104,22 @@ public class Habitaciones {
 
         // Agrego la habitación al final de la colección
 
-        coleccionHabitaciones[tamano] = new Habitacion(habitacion);
+        coleccionHabitaciones[getTamano()] = new Habitacion(habitacion);
 
         tamano++;
     }
 
     private int buscarIndice(Habitacion habitacion)  {
 
-        if (habitacion==null){
-
-            throw new NullPointerException("Error");
-        }
-
-        int indice = -1;
 
         for (int i = 0; i < tamano; i++) {
 
             if (coleccionHabitaciones[i].equals(habitacion)) {
 
-                indice=i;
+                return i;
             }
         }
-
-        return indice;
+        return -1;
     }
 
     private boolean tamanoSuperado(int indice) {
@@ -137,7 +133,10 @@ public class Habitaciones {
     }
 
     public Habitacion buscar(Habitacion habitacion) {
+        if (habitacion==null){
 
+            throw new NullPointerException("error nulo");
+        }
         int indice = buscarIndice(habitacion);
 
         return (indice != -1) ? coleccionHabitaciones[indice] : null;
@@ -157,16 +156,20 @@ public class Habitaciones {
             throw new  OperationNotSupportedException ("ERROR: No existe ninguna habitación como la indicada.");
         }
 
-        if (indice != -1) {
 
-            desplazarUnaPosicionHaciaIzquierda(indice);
 
-            tamano--;
+        desplazarUnaPosicionHaciaIzquierda(indice);
 
-        }
+        tamano--;
+
+
     }
 
     private void desplazarUnaPosicionHaciaIzquierda(int indice) {
+        if(indice<0 || capacidadSuperada(indice)){
+
+            throw new IllegalArgumentException("desplazarunaPosicion no puede ser menor que cero");
+        }
 
         for (int i = indice; i < tamano - 1; i++) {
 

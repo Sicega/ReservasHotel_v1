@@ -72,20 +72,20 @@ public class Huespedes {
 
         if (huesped == null) {
 
-            throw new IllegalArgumentException("ERROR: No es posible copiar un huésped nulo.");
+            throw new NullPointerException("ERROR: No se puede insertar un huésped nulo.");
         }
 
         // Compruebo si el huésped ya existe en la colección
 
-        if (buscar(huesped) == null) {
+        if (buscar(huesped) != null) {
 
-            throw new IllegalArgumentException("ERROR: Ya existe un huésped con ese dni.");
+            throw new OperationNotSupportedException("ERROR: Ya existe un huésped con ese dni.");
         }
 
-        /*if(capacidad<0){
+        if(capacidad<0){
 
             throw new IllegalArgumentException("ERROR: La capacidad debe ser mayor que cero.");
-        }*/
+        }
 
         if (tamano >= capacidad) {
 
@@ -94,7 +94,7 @@ public class Huespedes {
 
         // Agrego el huésped al final de la colección
 
-        coleccionHuespedes[tamano] = new Huesped(huesped);
+        coleccionHuespedes[getTamano()] = new Huesped(huesped);
 
         tamano++;
 
@@ -141,7 +141,7 @@ public class Huespedes {
 
         int indice = buscarIndice(huesped);
 
-        return coleccionHuespedes[indice];
+        return (indice != -1) ? coleccionHuespedes[indice] : null;
     }
 
     /*1.5-El método borrar, si el huésped se encuentra en la colección, lo borrará y desplazará
@@ -161,7 +161,6 @@ public class Huespedes {
             throw new  OperationNotSupportedException ("ERROR: No existe ningún huésped como el indicado.");
         }
 
-        coleccionHuespedes[indice]=null;
 
         desplazarUnaPosicionHaciaIzquierda(indice);
 

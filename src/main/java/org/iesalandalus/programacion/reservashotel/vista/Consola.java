@@ -218,29 +218,22 @@ public class Consola {
 
     public static LocalDateTime leerFechaHora(String mensaje) {
 
-        // Variable para almacenar la entrada del usuario (fecha y hora)
+        // Bucle while para asegurar que se solicita la entrada al menos una vez y se repite si la entrada no es válida
 
-        String fechaHora = null;
-
-        // Bucle do-while para asegurar que se solicita la entrada al menos una vez y se repite si la entrada no es válida
-
-        do {
+        while (!mensaje.matches(Reserva.FORMATO_FECHA_HORA_RESERVA)) {
             System.out.print(mensaje);
+            System.out.println("No es un patrón válido. Inténtalo de nuevo. (dd/MM/yyyy hh:mm:ss)");
 
-            fechaHora = Entrada.cadena();
+            mensaje = Entrada.cadena();
 
-            // Para verificar si la entrada coincide con el formato esperado
 
-            if (!fechaHora.matches(Reserva.FORMATO_FECHA_HORA_RESERVA)) {
-                System.out.println("ERROR: Formato de fecha y hora incorrecto.");
-            }
-        } while (!fechaHora.matches(Reserva.FORMATO_FECHA_HORA_RESERVA));
+        }
 
         // Cre0 un formateador de fecha y hora con el formato de la constante
 
         DateTimeFormatter formato = DateTimeFormatter.ofPattern(Reserva.FORMATO_FECHA_HORA_RESERVA);
 
-        return LocalDateTime.parse(fechaHora, formato); // Convierto la cadena de fecha y hora a un objeto LocalDateTime utilizando el formateador
+        return LocalDateTime.parse(mensaje, formato); // Convierto la cadena de fecha y hora a un objeto LocalDateTime utilizando el formateador
     }
 
 }

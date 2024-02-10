@@ -132,13 +132,13 @@ public class Modelo {
 
     //Métodos para gestionar checkIn y checkOut
 
-    public void realizarCheckIn(Reserva reserva, LocalDateTime fecha) throws OperationNotSupportedException {
+    public void realizarCheckIn(Reserva reserva, LocalDateTime fecha) {
 
         reservas.realizarCheckin(reserva, fecha);
 
     }
 
-    public void realizarCheckOut(Reserva reserva, LocalDateTime fecha) throws OperationNotSupportedException {
+    public void realizarCheckOut(Reserva reserva, LocalDateTime fecha) {
 
         reservas.realizarCheckout(reserva, fecha);
 

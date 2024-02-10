@@ -144,13 +144,13 @@ public class Controlador {
 
     //Métodos para gestionar checkIn y checkOut
 
-    public void realizarCheckIn(Reserva reserva, LocalDateTime fecha) throws OperationNotSupportedException {
+    public void realizarCheckIn(Reserva reserva, LocalDateTime fecha)  {
 
         modelo.realizarCheckIn(reserva, fecha);
 
     }
 
-    public void realizarCheckOut(Reserva reserva, LocalDateTime fecha) throws OperationNotSupportedException {
+    public void realizarCheckOut(Reserva reserva, LocalDateTime fecha)  {
 
         modelo.realizarCheckOut(reserva, fecha);
 

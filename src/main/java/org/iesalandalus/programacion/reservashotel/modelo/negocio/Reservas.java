@@ -66,7 +66,7 @@ public class Reservas {
         // Compruebo si la reserva ya existe en la colección
 
         if (buscar(reserva) != null) {
-            throw new IllegalArgumentException("ERROR: La reserva ya existe en la colección.");
+            throw new OperationNotSupportedException("ERROR: Ya existe una reserva igual.");
         }
 
         if (capacidad < 0) {
@@ -74,7 +74,7 @@ public class Reservas {
         }
 
         if (tamano >= capacidad) {
-            throw new IllegalArgumentException("ERROR: No se aceptan más reservas.");
+            throw new OperationNotSupportedException("ERROR: No se aceptan más reservas.");
         }
 
         // Agrego la reserva al final de la colección
@@ -111,7 +111,7 @@ public class Reservas {
     public Reserva buscar(Reserva reserva)  {
         if (reserva==null){
 
-            throw new NullPointerException("errorcillo");
+            throw new NullPointerException("error nulo");
         }
 
         int indice = buscarIndice(reserva);
@@ -129,13 +129,13 @@ public class Reservas {
         int indice = buscarIndice(reserva);
 
         if (indice == -1) {
-            throw new IllegalArgumentException("ERROR: No existe ninguna reserva como la indicada.");
+            throw new OperationNotSupportedException("ERROR: No existe ninguna reserva como la indicada.");
         }
 
-        if (indice != -1) {
-            desplazarUnaPosicionHaciaIzquierda(indice);
-            tamano--;
-        }
+        desplazarUnaPosicionHaciaIzquierda(indice);
+
+        tamano--;
+
     }
 
     // Método para desplazar una posición hacia la izquierda
@@ -143,7 +143,7 @@ public class Reservas {
 
         if(indice<0 || capacidadSuperada(indice)){
 
-            throw new NullPointerException("desplazarunaPosicion no puede ser menor que cero");
+            throw new IllegalArgumentException("desplazarunaPosicion no puede ser menor que cero");
         }
 
         for (int i = indice; i < tamano - 1; i++) {
@@ -209,7 +209,7 @@ public class Reservas {
 
         if (habitacion == null) {
 
-            throw new IllegalArgumentException("ERROR: La habitación no puede ser nula.");
+            throw new NullPointerException("ERROR: No se pueden buscar reservas de una habitación nula.");
         }
 
         LocalDate fechaActual = LocalDate.now();
@@ -234,13 +234,19 @@ public class Reservas {
 
     //El método realizar checkIn debe buscar el índice de la reserva y si verifica que la reserva está en la colección aplica el setCheckIn con parámetro fecha
 
-    public void realizarCheckin(Reserva reserva, LocalDateTime fecha) throws OperationNotSupportedException {
+    public void realizarCheckin(Reserva reserva, LocalDateTime fecha) {
 
         //Compruebo si la reserva o la fecha son nulas
 
         if (reserva == null || fecha == null) {
             throw new NullPointerException("ERROR: La reserva y la fecha no pueden ser nulas.");
         }
+
+        if(fecha.isBefore(reserva.getFechaInicioReserva().atStartOfDay())){
+
+            throw new IllegalArgumentException("ERROR: La fecha del checkIn no puede ser anterior a la reserva.");
+        }
+
 
         //busco el indice de la reserva para ver si existe
 
@@ -259,10 +265,22 @@ public class Reservas {
 
     //El mismo procedimiento de realizarCheckIn se aplica al checkOut
 
-    public void realizarCheckout(Reserva reserva, LocalDateTime fecha) throws OperationNotSupportedException {
+    public void realizarCheckout(Reserva reserva, LocalDateTime fecha)  {
 
         if (reserva == null || fecha == null) {
             throw new NullPointerException("ERROR: La reserva y la fecha no pueden ser nulas.");
+        }
+
+        if(reserva.getCheckIn()==null){
+
+            throw new NullPointerException("ERROR: No puedes hacer checkOut si el checkIn es nulo.");
+        }
+
+        if(fecha.isBefore(reserva.getFechaInicioReserva().atStartOfDay()) || fecha.isBefore(reserva.getCheckIn())){
+
+            throw new IllegalArgumentException("ERROR: la fecha del checkOut no puede ser anterior a la de " +
+                    "inicio de reserva o antes del checkIn.");
+
         }
 
         int indice = buscarIndice(reserva);

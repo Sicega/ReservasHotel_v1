@@ -54,6 +54,7 @@ public class Reserva {
 
         //Compruebo que el check in y el check out no son nulos antes de asignarlos
 
+
         if (reserva.getCheckIn() != null) {
 
             setCheckIn(reserva.getCheckIn());
@@ -63,7 +64,6 @@ public class Reserva {
 
             setCheckOut(reserva.getCheckOut());
         }
-
         setNumeroPersonas(reserva.getNumeroPersonas());
         setPrecio();
 

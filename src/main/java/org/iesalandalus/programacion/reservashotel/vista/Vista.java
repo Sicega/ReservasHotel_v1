@@ -518,7 +518,7 @@ public class Vista {
 
         Reserva[] reservasHuesped = reservas.getReservas(huesped);
 
-        if (reservasHuesped.length == 0) {
+        if (reservasHuesped.length == 0) { //Verifica si el huesped tiene reservas
 
             System.out.println("El huésped no tiene reservas.");
 

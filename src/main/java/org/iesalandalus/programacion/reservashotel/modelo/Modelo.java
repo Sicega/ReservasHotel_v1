@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 public class Modelo {
 
-    private static int CAPACIDAD=10; //Inicializo la constante CAPACIDAD
+    private static final int CAPACIDAD=10; //Inicializo la constante CAPACIDAD
 
     private Huespedes huespedes;
     private Habitaciones habitaciones;

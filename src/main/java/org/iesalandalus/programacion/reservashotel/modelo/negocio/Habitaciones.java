@@ -35,18 +35,18 @@ public class Habitaciones {
 
     private Habitacion [] copiaProfundaHabitaciones(){
 
-        Habitacion [] miHabitacion = new Habitacion [getCapacidad()];
+        Habitacion[] miHabitacion = new Habitacion[getCapacidad()];
 
-        int indice=0;
+        int indice = 0;
 
-        for (Habitacion habitacion : coleccionHabitaciones){
-
-            miHabitacion [indice]= new Habitacion(habitacion);
-
-            indice++;
+        for (Habitacion habitacion : coleccionHabitaciones) {
+            if (habitacion != null) {
+                miHabitacion[indice] = new Habitacion(habitacion);
+                indice++;
+            }
         }
 
-        return miHabitacion;
+        return Arrays.copyOf(miHabitacion, indice);
     }
 
     public Habitacion[] get(TipoHabitacion tipoHabitacion) {
@@ -93,9 +93,6 @@ public class Habitaciones {
             throw new OperationNotSupportedException("ERROR: Ya existe una habitación con ese identificador.");
         }
 
-        if (capacidad < 0) {
-            throw new IllegalArgumentException("ERROR: La capacidad debe ser mayor que cero.");
-        }
 
         if (tamano >= capacidad) {
 

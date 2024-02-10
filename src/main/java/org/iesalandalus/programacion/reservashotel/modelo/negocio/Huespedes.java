@@ -3,6 +3,7 @@ package org.iesalandalus.programacion.reservashotel.modelo.negocio;
 import org.iesalandalus.programacion.reservashotel.modelo.dominio.Huesped;
 
 import javax.naming.OperationNotSupportedException;
+import java.util.Arrays;
 
 public class Huespedes {
 
@@ -41,18 +42,21 @@ public class Huespedes {
 
     private Huesped [] copiaProfundaHuespedes(){
 
-        Huesped [] miHuesped = new Huesped[getCapacidad()];
+        Huesped[] miHuesped = new Huesped[getCapacidad()];
 
-        int indice=0;
+        int indice = 0;
 
-        for (Huesped huesped : coleccionHuespedes){
+        for (Huesped huesped : coleccionHuespedes) {
 
-            miHuesped [indice]= new Huesped(huesped);
+            if (huesped != null) {
 
-            indice++;
+                miHuesped[indice] = new Huesped(huesped);
+
+                indice++;
+            }
         }
 
-        return miHuesped;
+        return Arrays.copyOf(miHuesped, indice);
     }
 
     public int getCapacidad() {

@@ -40,9 +40,12 @@ public class Reservas {
 
         for (Reserva reserva : coleccionReservas) {
 
-            misReservas[indice] = new Reserva(reserva);
+            if(reserva != null) {
 
-            indice++;
+                misReservas[indice] = new Reserva(reserva);
+
+                indice++;
+            }
         }
 
         return misReservas;

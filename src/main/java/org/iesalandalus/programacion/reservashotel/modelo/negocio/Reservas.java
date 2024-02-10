@@ -112,6 +112,7 @@ public class Reservas {
     }
 
     public Reserva buscar(Reserva reserva)  {
+
         if (reserva==null){
 
             throw new NullPointerException("error nulo");
@@ -156,10 +157,10 @@ public class Reservas {
         coleccionReservas[tamano - 1] = null;
     }
 
-    // Método para obtener reservas por huésped o tipo de habitación
+    // Métodos para obtener reservas por huésped o tipo de habitación
     public Reserva[] getReservas(Huesped huesped) {
 
-        if(huesped==null){
+        if(huesped==null){ //Verifica que el huesped no sea nulo
 
             throw new NullPointerException("ERROR: No se pueden buscar reservas de un huesped nulo.");
         }
@@ -168,7 +169,7 @@ public class Reservas {
 
         Reserva[] miReserva= new Reserva[capacidad];
 
-        for(Reserva elemento : coleccionReservas){
+        for(Reserva elemento : coleccionReservas){ //Recorro la colección de reservas para encontrar las reservas del huesped indicado
 
             if(elemento.getHuesped().equals(huesped)) {
 
@@ -210,23 +211,23 @@ public class Reservas {
     // Método para obtener reservas futuras para una habitación
     public Reserva[] getReservasFuturas(Habitacion habitacion) {
 
-        if (habitacion == null) {
+        if (habitacion == null) { //Verifico que la habitación no sea nula
 
             throw new NullPointerException("ERROR: No se pueden buscar reservas de una habitación nula.");
         }
 
-        LocalDate fechaActual = LocalDate.now();
+        LocalDate fechaActual = LocalDate.now(); // Obtiene la fecha actual
 
-        Reserva[] reservasFuturas = new Reserva[tamano];
+        Reserva[] reservasFuturas = new Reserva[tamano]; // Array para almacenar las reservas futuras
 
         int contador = 0;
 
-        for (int i = 0; i < tamano; i++) {
+        for (int i = 0; i < tamano; i++) { // Itera sobre las reservas para encontrar las futuras de la habitación especificada
 
             if (coleccionReservas[i].getHabitacion().equals(habitacion)
                     && coleccionReservas[i].getFechaInicioReserva().isAfter(fechaActual)) {
 
-                reservasFuturas[contador] = new Reserva(coleccionReservas[i]);
+                reservasFuturas[contador] = new Reserva(coleccionReservas[i]); // Almacena una copia profunda de la reserva en el nuevo array
 
                 contador++;
             }

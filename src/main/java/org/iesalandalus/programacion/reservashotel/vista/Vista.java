@@ -7,7 +7,6 @@ import org.iesalandalus.programacion.utilidades.Entrada;
 import javax.naming.OperationNotSupportedException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Comparator;
 
@@ -17,6 +16,7 @@ public class Vista {
     private static Huespedes huespedes;
     private static Habitaciones habitaciones;
     private static Controlador controlador;
+
 
     public void setControlador(Controlador controlador) {
 
@@ -103,6 +103,8 @@ public class Vista {
     }
 
     private static void insertarHuesped(){ // Inserta un nuevo huésped
+
+
 
         Huesped nuevoHuesped = Consola.leerHuesped();
 

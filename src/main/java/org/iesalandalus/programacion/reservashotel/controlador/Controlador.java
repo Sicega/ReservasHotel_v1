@@ -17,16 +17,16 @@ public class Controlador {
 
     public Controlador(Modelo modelo, Vista vista){
 
-        if (modelo == null || vista == null) {
+        if (modelo == null || vista == null) { //Verifico que ni modelo ni vista sean nulos
             throw new IllegalArgumentException("ERROR: El modelo y la vista no pueden ser nulos.");
         }
         this.modelo = modelo;
         this.vista = vista;
-        this.vista.setControlador(this);
+        this.vista.setControlador(this); //Paso como parámetro el controlador
 
     }
 
-    public void comenzar(){
+    public void comenzar(){ //Llama a los métodos comenzar de vista y modelo
 
         modelo.comenzar();
         vista.comenzar();

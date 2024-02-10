@@ -15,8 +15,8 @@ public enum Opcion {
     ANULAR_RESERVA("Anular reserva."),
     MOSTRAR_RESERVAS("Mostrar reservas."),
     CONSULTAR_DISPONIBILIDAD("Consultar disponibilidad."),
-    REALIZAR_CHECKIN("Realizar CheckIn."),
-    REALIZAR_CHECKOUT("Realizar CheckOut.");
+    REALIZAR_CHECKIN("Realizar CheckIn."), //Añado realizar CheckIn a las opciones
+    REALIZAR_CHECKOUT("Realizar CheckOut."); //Añado realizar CheckOut a las opciones
 
 
     private String mensajeAMostrar;

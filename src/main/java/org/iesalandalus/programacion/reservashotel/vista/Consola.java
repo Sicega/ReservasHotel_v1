@@ -12,56 +12,71 @@ public class Consola {
 
     }
 
-    public static void mostrarMenu() {
+    public static void mostrarMenu() { // Método estático para mostrar el menú de opciones
 
-        for (Opcion opcion : Opcion.values()) {
+        for (Opcion opcion : Opcion.values()) { //con values devuelvo un array que contiene las constantes del enumerado en el orden declarado
 
-            System.out.println(opcion);
+            System.out.println(opcion); //Saca por consola las opciones del enumerado
         }
     }
 
     public static Opcion elegirOpcion() {
 
-        int opcionElegida;
+        int opcionElegida; //Variable para almacenar el número de la opción escogida
 
         do{
             System.out.print("Elige una opción: ");
 
             opcionElegida = Entrada.entero();
 
-        }while(opcionElegida<0 || opcionElegida > Opcion.values().length);
+        }while(opcionElegida<0 || opcionElegida > Opcion.values().length); //Verifico que la opción escogida esté dentro del enumerado
 
         return Opcion.values()[opcionElegida];
 
     }
 
-    public static Huesped leerHuesped() {
+    public static Huesped leerHuesped() { //Método para introducir los datos del huésped
 
         String nombre;
 
-        do{
+        do{ //Verifico que no sea nulo ni contenga solo espacios
             System.out.print("Introduce el nombre del huésped: ");
 
             nombre = Entrada.cadena();
 
         }while(nombre == null || nombre.isBlank());
 
-        //todo hacer el do while con todo
+        String dni;
 
-        System.out.print("Introduce el DNI del huésped: ");
+        do {
 
-        String dni = Entrada.cadena();
+            System.out.print("Introduce el DNI del huésped: ");
 
-        System.out.print("Introduce el correo del huésped: ");
+            dni = Entrada.cadena();
 
-        String correo = Entrada.cadena();
+        }while(dni == null || dni.isBlank());
 
-        System.out.print("Introduce el teléfono del huésped: ");
+        String correo;
 
-        String telefono = Entrada.cadena();
+        do {
 
-        System.out.print("Introduce la fecha de nacimiento del huésped ddMMyyyy: ");
+            System.out.print("Introduce el correo del huésped: ");
 
+            correo = Entrada.cadena();
+
+        }while(correo == null || correo.isBlank());
+
+        String telefono;
+
+        do {
+            System.out.print("Introduce el teléfono del huésped: ");
+
+            telefono = Entrada.cadena();
+
+        }while(telefono==null || telefono.isBlank());
+
+
+        System.out.print("Introduce la fecha de nacimiento del huésped: ");
 
         LocalDate fechaNacimiento = Consola.leerFecha();
 
@@ -77,7 +92,7 @@ public class Consola {
         return new Huesped("nombre", dni, "correo@gmail.com", "623456789", LocalDate.of(2000,4,4));
     }
 
-    public static LocalDate leerFecha() {
+    public static LocalDate leerFecha() { //Método para validar la fecha introducida
 
         String fecha = null;
 
@@ -85,7 +100,7 @@ public class Consola {
 
         while (!fechaValida) {
 
-            System.out.print("Introduce la fecha (formato dd/mm/yyyy): ");
+            System.out.print("Formato dd/MM/yyyy: ");
 
             fecha = Entrada.cadena();
 
@@ -104,8 +119,6 @@ public class Consola {
     }
 
     public static Habitacion leerHabitacion() {
-
-        //todo pon los do while, poner las constantes de los valores min y max
 
         System.out.print("Introduce el número de planta de la habitación: ");
 
@@ -152,7 +165,7 @@ public class Consola {
 
         for (TipoHabitacion tipo : TipoHabitacion.values()) {
 
-            System.out.println(tipo);
+            System.out.println(tipo); // Imprime los tipos de habitación disponibles
 
         }
 
@@ -175,12 +188,12 @@ public class Consola {
 
         for (Regimen regimen : Regimen.values()) {
 
-            System.out.println(regimen);
+            System.out.println(regimen); // Imprime los tipos de régimen disponibles
         }
 
         System.out.print("Elige un tipo de régimen: ");
 
-        //todo hacer el do while
+
         int regimenElegido = Entrada.entero();
 
         return Regimen.values()[regimenElegido];
@@ -190,6 +203,7 @@ public class Consola {
 
         int numeroPersonas;
 
+        // Bucle do-while para garantizar un número de personas válido
 
         do {
             System.out.print("Introduce el número de personas: ");
@@ -206,12 +220,16 @@ public class Consola {
 
         System.out.println("Introduce los datos de la reserva:");
 
+        // Llama a los métodos de la clase Consola para obtener los objetos Huesped, Habitacion, Regimen, etc.
+
         Huesped huesped = leerHuesped();
         Habitacion habitacion = leerHabitacion();
         Regimen regimen=leerRegimen();
         LocalDate fechaInicioReserva = leerFecha();
         LocalDate fechaFinReserva = leerFecha();
         int numeroPersonas= leerNumeroPersonas();
+
+        // Crea y devuelve un nuevo objeto Reserva con los datos introducidos
 
         return new Reserva(huesped, habitacion, regimen, fechaInicioReserva, fechaFinReserva, numeroPersonas);
     }
@@ -229,7 +247,7 @@ public class Consola {
 
         }
 
-        // Cre0 un formateador de fecha y hora con el formato de la constante
+        // Creo un formateador de fecha y hora con el formato de la constante
 
         DateTimeFormatter formato = DateTimeFormatter.ofPattern(Reserva.FORMATO_FECHA_HORA_RESERVA);
 

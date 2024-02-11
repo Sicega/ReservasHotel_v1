@@ -15,6 +15,7 @@ public class Vista {
 
     private static Controlador controlador;
 
+    //Creo método setControlador
 
     public void setControlador(Controlador controlador) {
 

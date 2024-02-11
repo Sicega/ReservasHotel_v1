@@ -86,6 +86,8 @@ public class Consola {
         return new Huesped(nombre, dni, correo, telefono, fechaNacimiento);
     }
 
+    //Método para leer al huésped por DNI
+
     public static Huesped leerHuespedPorDni() {
 
         System.out.print("Introduce el DNI del huésped: ");

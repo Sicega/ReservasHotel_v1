@@ -47,6 +47,7 @@ public class Consola {
         }while(nombre == null || nombre.isBlank());
 
         String dni;
+        String ER_DNI = "([0-9]{8})([A-Za-z])";
 
         do {
 
@@ -54,9 +55,10 @@ public class Consola {
 
             dni = Entrada.cadena();
 
-        }while(dni == null || dni.isBlank());
+        }while(dni == null || dni.isBlank() || !dni.matches(ER_DNI));
 
         String correo;
+        String ER_CORREO = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+[.][a-zA-Z]{2,4}$";
 
         do {
 
@@ -64,16 +66,17 @@ public class Consola {
 
             correo = Entrada.cadena();
 
-        }while(correo == null || correo.isBlank());
+        }while(correo == null || correo.isBlank() || !correo.matches(ER_CORREO));
 
         String telefono;
+        String ER_TELEFONO = "[0-9]{9}";
 
         do {
             System.out.print("Introduce el teléfono del huésped: ");
 
             telefono = Entrada.cadena();
 
-        }while(telefono==null || telefono.isBlank());
+        }while(telefono==null || telefono.isBlank() || !telefono.matches(ER_TELEFONO));
 
 
         System.out.print("Introduce la fecha de nacimiento del huésped: ");
@@ -141,9 +144,12 @@ public class Consola {
 
     public static Habitacion leerHabitacionPorIdentificador() {
 
-        System.out.print("Introduce el identificador de la habitación: ");
+        System.out.print("Introduce la planta de la habitación: ");
 
         int planta = Entrada.entero();
+
+        System.out.println("Introduce la puerta de la habitación: ");
+
         int puerta = Entrada.entero();
 
 

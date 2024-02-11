@@ -12,9 +12,7 @@ import java.util.Comparator;
 
 public class Vista {
 
-    private static Reservas reservas;
-    private static Huespedes huespedes;
-    private static Habitaciones habitaciones;
+
     private static Controlador controlador;
 
 
@@ -110,7 +108,7 @@ public class Vista {
 
         try {
 
-            huespedes.insertar(nuevoHuesped);
+            controlador.insertar(nuevoHuesped);
 
 
             System.out.println("Huésped insertado correctamente.");
@@ -127,7 +125,7 @@ public class Vista {
         Huesped huesped = Consola.leerHuespedPorDni();
 
         try {
-            Huesped huespedEncontrado = huespedes.buscar(huesped);
+            Huesped huespedEncontrado = controlador.buscar(huesped);
 
             System.out.println(huespedEncontrado);
 
@@ -148,7 +146,7 @@ public class Vista {
 
         try {
 
-            huespedes.borrar(huesped);
+            controlador.borrar(huesped);
 
             System.out.println("Huésped borrado correctamente.");
 
@@ -162,7 +160,7 @@ public class Vista {
     private static void mostrarHuespedes(){ // Muestra todos los huéspedes
 
 
-        Huesped[] listaHuespedes = huespedes.get();
+        Huesped[] listaHuespedes = controlador.getHuespedes();
 
         if (listaHuespedes.length > 0) {
 
@@ -186,7 +184,7 @@ public class Vista {
 
         try {
 
-            habitaciones.insertar(nuevaHabitacion);
+            controlador.insertar(nuevaHabitacion);
 
             System.out.println("Habitación insertada correctamente.");
 
@@ -216,7 +214,7 @@ public class Vista {
 
         try {
 
-            habitaciones.borrar(Consola.leerHabitacionPorIdentificador());
+            controlador.borrar(Consola.leerHabitacionPorIdentificador());
 
             System.out.println("Habitación borrada correctamente.");
 
@@ -229,7 +227,7 @@ public class Vista {
 
     private static void mostrarHabitaciones(){ // Muestra todas las habitaciones
 
-        Habitacion[] listaHabitaciones = habitaciones.get();
+        Habitacion[] listaHabitaciones = controlador.getHabitaciones();
 
         if (listaHabitaciones.length > 0) {
 
@@ -250,7 +248,7 @@ public class Vista {
 
         try {
 
-            reservas.insertar(nuevaReserva);
+            controlador.insertar(nuevaReserva);
 
             System.out.println("Reserva insertada correctamente.");
 
@@ -263,7 +261,7 @@ public class Vista {
 
     private static void listarReservas(Huesped huesped){ // Lista las reservas de un huésped
 
-        Reserva[] reservasHuesped = reservas.getReservas(huesped);
+        Reserva[] reservasHuesped =  controlador.getReservas(huesped);
 
         if (reservasHuesped.length > 0) {
 
@@ -281,7 +279,7 @@ public class Vista {
     private static void listarReservas(TipoHabitacion tipoHabitacion){ // Lista las reservas de un tipo de habitación
 
 
-        Reserva[] reservasTipoHabitacion = reservas.getReservas(tipoHabitacion);
+        Reserva[] reservasTipoHabitacion = controlador.getReservas(tipoHabitacion);
 
         if (reservasTipoHabitacion.length > 0) {
 
@@ -320,7 +318,7 @@ public class Vista {
 
         Huesped huesped = Consola.leerHuespedPorDni();
 
-        Reserva[] reservasAnulables = reservas.getReservas(huesped);
+        Reserva[] reservasAnulables = controlador.getReservas(huesped);
 
         reservasAnulables = getReservasAnulables(reservasAnulables);
 
@@ -336,7 +334,7 @@ public class Vista {
 
                 try {
 
-                    reservas.borrar(reservasAnulables[0]);
+                    controlador.borrar(reservasAnulables[0]);
                     System.out.println("Reserva anulada correctamente.");
 
                 } catch (IllegalArgumentException | OperationNotSupportedException|NullPointerException e) {
@@ -374,7 +372,7 @@ public class Vista {
 
             try {
 
-                reservas.borrar(reservasAnulables[indiceReserva]);
+                controlador.borrar(reservasAnulables[indiceReserva]);
 
                 System.out.println("Reserva anulada correctamente.");
 
@@ -388,7 +386,7 @@ public class Vista {
 
     private static void mostrarReservas(){ // Muestra todas las reservas
 
-        Reserva [] listaReservas = reservas.get();
+        Reserva [] listaReservas = controlador.getReservas();
         if (listaReservas.length > 0) {
             for (Reserva reserva : listaReservas) {
                 System.out.println(reserva);
@@ -421,7 +419,7 @@ public class Vista {
         Habitacion habitacionDisponible=null;
         int numElementos=0;
 
-        Habitacion[] habitacionesTipoSolicitado= habitaciones.get(tipoHabitacion);
+        Habitacion[] habitacionesTipoSolicitado= controlador.getHabitaciones(tipoHabitacion);
 
         if (habitacionesTipoSolicitado==null)
             return habitacionDisponible;
@@ -431,7 +429,7 @@ public class Vista {
 
             if (habitacionesTipoSolicitado[i]!=null)
             {
-                Reserva[] reservasFuturas = reservas.getReservasFuturas(habitacionesTipoSolicitado[i]);
+                Reserva[] reservasFuturas = controlador.getReservasFuturas(habitacionesTipoSolicitado[i]);
                 numElementos=getNumElementosNoNulos(reservasFuturas);
 
                 if (numElementos == 0)
@@ -516,7 +514,7 @@ public class Vista {
 
         LocalDateTime fechaCheckin = Consola.leerFechaHora(Entrada.cadena());
 
-        Reserva[] reservasHuesped = reservas.getReservas(huesped);
+        Reserva[] reservasHuesped = controlador.getReservas(huesped);
 
         if (reservasHuesped.length == 0) { //Verifica si el huesped tiene reservas
 
@@ -542,7 +540,7 @@ public class Vista {
         } while (indiceReserva < 0 || indiceReserva >= reservasHuesped.length);
 
         try {
-            controlador.realizarCheckIn(reservasHuesped[indiceReserva], fechaCheckin);
+            controlador.realizarCheckIn(controlador.buscar(reservasHuesped[indiceReserva]), fechaCheckin);
 
             System.out.println("Checkin realizado correctamente.");
 
@@ -562,7 +560,7 @@ public class Vista {
 
         LocalDateTime fechaCheckout = Consola.leerFechaHora(Entrada.cadena());
 
-        Reserva[] reservasHuesped = reservas.getReservas(huesped);
+        Reserva[] reservasHuesped = controlador.getReservas(huesped);
 
         if (reservasHuesped.length == 0) { // Verifica si el huésped tiene reservas
 
@@ -590,7 +588,7 @@ public class Vista {
 
         try { // Realiza el checkout utilizando el controlador
 
-            controlador.realizarCheckOut(reservasHuesped[indiceReserva], fechaCheckout);
+            controlador.realizarCheckOut(controlador.buscar(reservasHuesped[indiceReserva]), fechaCheckout);
 
             System.out.println("Checkout realizado correctamente.");
 
